@@ -1,8 +1,8 @@
 import React from 'react'
 import type { Task, CSSProperties } from '../../../../types'
 import { TASK_PROGRESS_ID } from '../../../../constants/app'
-import { useRecoilState } from 'recoil'  // Ditambahkan
-import { tasksState } from '../../TaskAtoms'  // Ditambahkan
+import { useRecoilState } from 'recoil'  
+import { tasksState } from '../../TaskAtoms' 
 
 interface TaskCardProps {
   task: Task
@@ -50,7 +50,7 @@ const TaskCard = ({ task }: TaskCardProps): JSX.Element => {
           className="material-icons"
           style={getIconStyle(task.progressOrder)}
           onClick={(): void => {
-            completeTask(task.id) // Ditambahkan
+            completeTask(task.id) 
           }}
         >
           check_circle
