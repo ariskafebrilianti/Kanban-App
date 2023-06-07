@@ -3,6 +3,7 @@ import type { Task, CSSProperties } from '../../../../types'
 import { TASK_PROGRESS_ID } from '../../../../constants/app'
 import { useRecoilState } from 'recoil'  
 import { tasksState } from '../../TaskAtoms' 
+import {useTasksAction} from '../../hooks/Tasks'
 
 interface TaskCardProps {
   task: Task
@@ -35,14 +36,9 @@ const getArrowPositionStyle = (progressOrder: number): React.CSSProperties => {
 }
 
 const TaskCard = ({ task }: TaskCardProps): JSX.Element => {
-  const [tasks, setTasks] = useRecoilState<Task[]>(tasksState)
+  const {completeTask} = useTasksAction()
+  const {moveTaskCard} = useTasksAction()
 
-  const completeTask = (taskId: number): void => {
-    const updatedTasks: Task[] = tasks.map((task) =>
-      task.id === taskId ? { ...task, progressOrder: TASK_PROGRESS_ID.COMPLETED } : task
-    )
-    setTasks(updatedTasks)
-  }
   return (
     <div style={styles.taskCard}>
       <div style={styles.taskIcons}>
@@ -68,10 +64,16 @@ const TaskCard = ({ task }: TaskCardProps): JSX.Element => {
       </div>
       <div style={getArrowPositionStyle(task.progressOrder)}>
       {task.progressOrder !== TASK_PROGRESS_ID.NOT_STARTED && (
-          <button className="material-icons">chevron_left</button>
+          <button  className="material-symbols-outlined"
+          onClick={(): void => {
+          moveTaskCard(task.id, -1)
+        }}>chevron_left</button>
         )}
         {task.progressOrder !== TASK_PROGRESS_ID.COMPLETED && (
-          <button className="material-icons">chevron_right</button>
+          <button className="material-symbols-outlined"
+          onClick={(): void => {
+            moveTaskCard(task.id, 1)
+          }}>chevron_right</button>
         )}
       </div>
     </div>
