@@ -1,4 +1,3 @@
-import React from 'react'
 import type { Dispatch, SetStateAction } from 'react'
 import type { CSSProperties } from '../../../../types'
 import TaskForm from './TaskForm'
@@ -12,8 +11,8 @@ interface TaskModalProps {
 
 const TaskModal = ({
   headingTitle,
-  setIsModalOpen,
   type,
+  setIsModalOpen,
   defaultProgressOrder,
 }: TaskModalProps): JSX.Element => {
   return (
@@ -43,7 +42,7 @@ const styles: CSSProperties = {
   container: {
     border: '1px solid gray',
     position: 'fixed',
-    top: '20%',
+    top: '10%',
     left: '40%',
     width: '25%',
     backgroundColor: '#fff',

@@ -1,8 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
+import TaskMenu from '../shared/TaskMenu'
 import type { Task, CSSProperties } from '../../../../types'
 import { TASK_PROGRESS_ID } from '../../../../constants/app'
-import { useRecoilState } from 'recoil'  
-import { tasksState } from '../../TaskAtoms' 
 import {useTasksAction} from '../../hooks/Tasks'
 
 interface TaskCardProps {
@@ -36,8 +35,9 @@ const getArrowPositionStyle = (progressOrder: number): React.CSSProperties => {
 }
 
 const TaskCard = ({ task }: TaskCardProps): JSX.Element => {
-  const {completeTask} = useTasksAction()
-  const {moveTaskCard} = useTasksAction()
+  const {completeTask, moveTaskCard} = useTasksAction()
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
+
 
   return (
     <div style={styles.taskCard}>
@@ -51,7 +51,13 @@ const TaskCard = ({ task }: TaskCardProps): JSX.Element => {
         >
           check_circle
         </div>
-        <div className="material-icons" style={styles.menuIcon}>
+        <div
+          className="material-icons"
+          style={styles.menuIcon}
+          onClick={(): void => {
+            setIsMenuOpen(true) // Ditambahkan
+          }}
+        >
           more_vert
         </div>
       </div>
@@ -76,6 +82,7 @@ const TaskCard = ({ task }: TaskCardProps): JSX.Element => {
           }}>chevron_right</button>
         )}
       </div>
+      {isMenuOpen && <TaskMenu setIsMenuOpen={setIsMenuOpen} />}
     </div>
   )
 }
